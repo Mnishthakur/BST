@@ -80,4 +80,32 @@ namespace BST
 
             return 1 + CalculateSize(currentNode.Left) + CalculateSize(currentNode.Right);
         }
+
+        public bool Search(T value)
+        {
+            return SearchNode(Root, value);
+        }
+
+        private bool SearchNode(TreeNode<T> currentNode, T value)
+        {
+            if (currentNode == null)
+            {
+                return false;
+            }
+
+            if (currentNode.Value.Equals(value))
+            {
+                return true;
+            }
+
+            if (value.CompareTo(currentNode.Value) < 0)
+            {
+                return SearchNode(currentNode.Left, value);
+            }
+            else
+            {
+                return SearchNode(currentNode.Right, value);
+            }
+        }
     }
+
