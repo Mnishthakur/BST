@@ -3,68 +3,81 @@ using System.Collections.Generic;
 
 namespace BST
 {
-    public interface INode<T> where T : IComparable<T>
+    public class TreeNode<T>
     {
-        T Key { get; set; }
-        INode<T> Left { get; set; }
-        INode<T> Right { get; set; }
-    }
+        public T Value { get; set; }
+        public TreeNode<T> Left { get; set; }
+        public TreeNode<T> Right { get; set; }
 
-    public class MyBinaryNode<T> : INode<T> where T : IComparable<T>
-    {
-        public T Key { get; set; }
-        public INode<T> Left { get; set; }
-        public INode<T> Right { get; set; }
-
-        public MyBinaryNode(T key)
+        public TreeNode(T value)
         {
-            Key = key;
+            Value = value;
             Left = null;
             Right = null;
         }
     }
 
-    public class BinarySearchTree<T> where T : IComparable<T>
+    public class BinaryTree<T> where T : IComparable<T>
     {
-        private INode<T> root;
+        public TreeNode<T> Root { get; set; }
 
-        public INode<T> Root
+        public BinaryTree()
         {
-            get { return root; }
+            Root = null;
         }
 
-        public void Add(T key)
+        public void Insert(T value)
         {
-            root = AddRecursive(root, key);
+            TreeNode<T> newNode = new TreeNode<T>(value);
+
+            if (Root == null)
+            {
+                Root = newNode;
+            }
+            else
+            {
+                InsertNode(Root, newNode);
+            }
         }
 
-        private INode<T> AddRecursive(INode<T> currentNode, T key)
+        private void InsertNode(TreeNode<T> currentNode, TreeNode<T> newNode)
+        {
+            if (newNode.Value.CompareTo(currentNode.Value) < 0)
+            {
+                if (currentNode.Left == null)
+                {
+                    currentNode.Left = newNode;
+                }
+                else
+                {
+                    InsertNode(currentNode.Left, newNode);
+                }
+            }
+            else
+            {
+                if (currentNode.Right == null)
+                {
+                    currentNode.Right = newNode;
+                }
+                else
+                {
+                    InsertNode(currentNode.Right, newNode);
+                }
+            }
+        }
+
+        public int Size()
+        {
+            return CalculateSize(Root);
+        }
+
+        private int CalculateSize(TreeNode<T> currentNode)
         {
             if (currentNode == null)
             {
-                return new MyBinaryNode<T>(key);
+                return 0;
             }
 
-            if (key.CompareTo(currentNode.Key) < 0)
-            {
-                currentNode.Left = AddRecursive(currentNode.Left, key);
-            }
-            else if (key.CompareTo(currentNode.Key) > 0)
-            {
-                currentNode.Right = AddRecursive(currentNode.Right, key);
-            }
-
-            return currentNode;
-        }
-
-        public void InOrderTraversal(INode<T> currentNode)
-        {
-            if (currentNode != null)
-            {
-                InOrderTraversal(currentNode.Left);
-                Console.Write(currentNode.Key + " ");
-                InOrderTraversal(currentNode.Right);
-            }
+            return 1 + CalculateSize(currentNode.Left) + CalculateSize(currentNode.Right);
         }
     }
-}
