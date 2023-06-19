@@ -1,18 +1,28 @@
 namespace BST;
 
-class Program
-{
-    static void Main(string[] args)
+ class Program
     {
-        BinarySearchTree<int> bst = new BinarySearchTree<int>();
+        static void Main(string[] args)
+        {
+            BinaryTree<int> binaryTree = new BinaryTree<int>();
 
-        bst.Add(56);
-        bst.Add(30);
-        bst.Add(70);
+            // Create the binary tree
+            binaryTree.Insert(56);
+            binaryTree.Insert(30);
+            binaryTree.Insert(70);
+            binaryTree.Insert(22);
+            binaryTree.Insert(40);
+            binaryTree.Insert(11);
+            binaryTree.Insert(3);
+            binaryTree.Insert(16);
+            binaryTree.Insert(60);
+            binaryTree.Insert(95);
+            binaryTree.Insert(65);
+            binaryTree.Insert(63);
+            binaryTree.Insert(67);
 
-        Console.WriteLine("In-order traversal of the BST:");
-        bst.InOrderTraversal(bst.Root);
-        Console.WriteLine();
+            Console.WriteLine("Binary Tree size: " + binaryTree.Size());
+        }
     }
 }
 
